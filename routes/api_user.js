@@ -28,7 +28,11 @@ router.get('/:username?', function (req, res) {
                 if (err) {
                     console.log(err);
                 } else {
-                    res.status(200).json({"users": rows});
+                    if (rows.length > 0) {
+                        res.status(200).json({"users": rows});
+                    } else {
+                        res.status(200).send("User '" + username + "' does not exists.");
+                    }
                 }
             })
         }
