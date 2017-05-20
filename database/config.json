@@ -1,0 +1,7 @@
+{
+  "dbConnectionLimit" : 10,
+  "dbHost" : "",
+  "dbUser" : "",
+  "dbPassword" : "",
+  "dbDatabase" : ""
+}
