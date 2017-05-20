@@ -12,7 +12,7 @@ var port = process.env.PORT || app.get('PORT');
 
 //app uses following routes
 app.use('/api/user', require('./routes/api_user.js'));
-// app.use('/api/user', require('./routes/api_user.js'));
+app.use('/api/exercise', require('./routes/api_exercise.js'));
 // app.use('/api/user', require('./routes/api_user.js'));
 // app.use('/api/user', require('./routes/api_user.js'));
 // app.use('/api/user', require('./routes/api_user.js'));
