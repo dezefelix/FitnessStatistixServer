@@ -8,15 +8,22 @@ var connector = require('../database/connector');
 
 //SELECT (GET)
 //select all users, or a specific user
-router.get('/', function(req, res) {
+router.get('/:username?', function (req, res) {
 
-    var query = "SELECT * FROM user";
+    var username = req.params.username;
+    var query = "";
 
-    connector.getConnection(function(err, connection) {
+    if (username) {
+        query = "SELECT * FROM user WHERE username = '" + username + "';";
+    } else {
+        query = "SELECT * FROM user";
+    }
+
+    connector.getConnection(function (err, connection) {
         if (err) {
             console.log(err);
         } else {
-            connection.query(query, function(err, rows) {
+            connection.query(query, function (err, rows) {
                 connection.release();
                 if (err) {
                     console.log(err);
