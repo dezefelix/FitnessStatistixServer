@@ -1,0 +1,8 @@
+{
+  "port" : 8080,
+  "dbConnectionLimit" : 10,
+  "dbHost" : "eu-cdbr-west-01.cleardb.com",
+  "dbUser" : "b16d63d0373e3b",
+  "dbPassword" : "a03ae46d",
+  "dbDatabase" : "heroku_b982a1c9b50ac31"
+}

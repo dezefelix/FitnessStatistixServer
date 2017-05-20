@@ -1,5 +1,5 @@
 {
-  "name": "fitness-statistix",
+  "name": "fitness-statistix-server",
   "version": "1.0.0",
   "description": "Node.js server for handling database requests for the Fitness Statistix application (Android)",
   "main": "index.js",
