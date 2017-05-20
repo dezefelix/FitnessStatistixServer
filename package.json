@@ -4,6 +4,7 @@
   "description": "Node.js server for handling database requests for the Fitness Statistix application (Android)",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Felix Boons",
