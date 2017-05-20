@@ -13,7 +13,7 @@ router.get('/:exercise?', function (req, res) {
     var exercise = req.params.exercise;
     var query = "";
 
-    if (username) {
+    if (exercise) {
         query = "SELECT * FROM exercise WHERE name = '" + exercise + "';";
     } else {
         query = "SELECT * FROM exercise";
