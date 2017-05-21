@@ -1,0 +1,18 @@
+{
+  "API routes info": [{
+    "User" : [
+      "api/user/<username> (GET)",
+      "api/user/login/<username> (GET) (unf)",
+      "api/user/signup<query params> (POST) (unf)"
+    ]
+  }, {
+    "Exercise" : [
+      "api/exercise/<exercise> (GET) (unf)"
+    ]
+  }, {
+    "Muscle" : [
+      "api/muscle/<muscle> (GET) (unf)",
+      ""
+    ]
+  }]
+}

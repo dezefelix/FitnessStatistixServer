@@ -13,7 +13,7 @@ var port = process.env.PORT || app.get('PORT');
 //app uses following routes
 app.use('/api/user', require('./routes/api_user.js'));
 app.use('/api/exercise', require('./routes/api_exercise.js'));
-// app.use('/api/user', require('./routes/api_user.js'));
+app.use('/api/muscle', require('./routes/api_muscle.js'));
 // app.use('/api/user', require('./routes/api_user.js'));
 // app.use('/api/user', require('./routes/api_user.js'));
 
@@ -25,19 +25,7 @@ app.all('*', function (req, res, next) {
 
 //info page to show all usages of this api
 app.get('/info', function (req, res) {
-    res.send({
-        "API routes info": [{
-            "User" : [
-                "api/user (GET)",
-                "api/user/login\<username\> (GET) (unf)",
-                "api/user/signup (POST) (unf)"
-            ]
-        }, {
-            "Exercise" : [
-                "api/exercise (GET) (unf)"
-            ]
-        }]
-    })
+    res.send(require('./routes/overview.json'));
 });
 
 
