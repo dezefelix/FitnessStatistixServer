@@ -7,11 +7,11 @@
     ]
   }, {
     "Exercise" : [
-      "api/exercise/<exercise> (GET) (unf)"
+      "api/exercise/<exercise> (GET)"
     ]
   }, {
     "Muscle" : [
-      "api/muscle/<muscle> (GET) (unf)",
+      "api/muscle/<muscle> (GET)",
       ""
     ]
   }]

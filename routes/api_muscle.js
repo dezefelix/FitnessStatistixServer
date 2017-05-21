@@ -7,16 +7,16 @@ var router = express.Router();
 var connector = require('../database/connector');
 
 //SELECT (GET)
-//select all exercises, or a specific exercise
-router.get('/:exercise?', function (req, res) {
+//select all muscles, or a specific muscle
+router.get('/:muscle?', function (req, res) {
 
-    var exercise = req.params.exercise;
+    var muscle = req.params.muscle;
     var query = "";
 
-    if (exercise) {
-        query = "SELECT * FROM exercise WHERE name = '" + exercise + "';";
+    if (muscle) {
+        query = "SELECT * FROM muscle WHERE name = '" + muscle + "';";
     } else {
-        query = "SELECT * FROM exercise";
+        query = "SELECT * FROM muscle";
     }
 
     connector.getConnection(function (err, connection) {
@@ -29,9 +29,9 @@ router.get('/:exercise?', function (req, res) {
                     console.log(err);
                 } else {
                     if (rows.length > 0) {
-                        res.status(200).json({"exercises": rows});
+                        res.status(200).json({"muscles": rows});
                     } else {
-                        res.status(200).send("Exercise '" + exercise + "' does not exists.");
+                        res.status(200).send("Muscle '" + muscle + "' does not exists.");
                     }
                 }
             })
