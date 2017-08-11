@@ -32,7 +32,7 @@ router.get('/:email?', function (req, res) {
                 if (rows.length > 0) {
                     res.status(200).json({"users": rows});
                 } else {
-                    res.status(200).send("User '" + email + "' does not exist.");
+                    res.status(200).send({"User": "'" + email + "' does not exist."});
                 }
             }
         })
