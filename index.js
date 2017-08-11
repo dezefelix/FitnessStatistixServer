@@ -3,12 +3,19 @@
  */
 
 var config = require('./config.json');
+
+var bodyParser = require('body-parser');
 var express = require('express');
 var app = express();
 
-//configure port
+//configure settings
+app.set('SECRET_KEY', config.secretKey);
 app.set('PORT', config.port);
 var port = process.env.PORT || app.get('PORT');
+
+//set body-parser settings
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 //app uses following routes
 app.use('/api/user', require('./routes/api_user.js'));
@@ -40,4 +47,4 @@ app.listen(port, function () {
     console.log("Server listening at " + port);
 });
 
-// module.exports = app;
+module.exports = app;

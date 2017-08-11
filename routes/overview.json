@@ -3,7 +3,7 @@
     "User" : [
       "api/user/<username> (GET)",
       "api/user/login/<username> (GET) (unf)",
-      "api/user/signup<query params> (POST) (unf)"
+      "api/user/register<query params> (POST) (unf)"
     ]
   }, {
     "Exercise" : [
