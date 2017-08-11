@@ -12,34 +12,30 @@ var router = express.Router();
 
 //SELECT (GET)
 //select all users, or a specific user
-router.get('/:username?', function (req, res) {
+router.get('/:email?', function (req, res) {
 
-    var username = req.params.username;
+    var email = req.params.email;
     var query = "";
 
-    if (username) {
-        query = "SELECT * FROM user WHERE username = '" + username + "';";
+    if (email) {
+        query = "SELECT * FROM user WHERE email = '" + email + "';";
     } else {
         query = "SELECT * FROM user";
     }
 
     connector.getConnection(function (err, connection) {
-        if (err) {
-            console.log(err);
-        } else {
-            connection.query(query, function (err, rows) {
-                connection.release();
-                if (err) {
-                    console.log(err);
+        connection.query(query, function (err, rows) {
+            connection.release();
+            if (err) {
+                console.log(err);
+            } else {
+                if (rows.length > 0) {
+                    res.status(200).json({"users": rows});
                 } else {
-                    if (rows.length > 0) {
-                        res.status(200).json({"users": rows});
-                    } else {
-                        res.status(200).send("User '" + username + "' does not exists.");
-                    }
+                    res.status(200).send("User '" + email + "' does not exist.");
                 }
-            })
-        }
+            }
+        })
     })
 });
 
@@ -61,8 +57,7 @@ router.post('/register', function (req, res) {
                     'ADDTIME(now(), \'02:00:00\'), ADDTIME(now(), \'02:00:00\'));', function (error) {
                     con.release();
                     if (error) {
-                        console.log(error);
-                        // res.status(400).json({"registration": "failed"});
+                        res.status(400).json({"registration": "failed"});
                     } else {
                         res.status(200).json({"registration": "success"});
                     }
