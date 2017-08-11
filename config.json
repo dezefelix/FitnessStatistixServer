@@ -1,4 +1,5 @@
 {
+  "secretKey": "VideoShopServerSuperSecretKey-123456789",
   "port" : 8080,
   "dbConnectionLimit" : 10,
   "dbHost" : "eu-cdbr-west-01.cleardb.com",
