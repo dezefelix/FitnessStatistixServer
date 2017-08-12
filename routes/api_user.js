@@ -10,8 +10,7 @@ var saltRounds = 10;
 var express = require('express');
 var router = express.Router();
 
-//SELECT (GET)
-//select all users, or a specific user
+//select all users, or a specific user (used to check if email already exists)
 router.get('/:email?', function (req, res) {
 
     var email = req.params.email;
@@ -23,11 +22,11 @@ router.get('/:email?', function (req, res) {
         query = "SELECT * FROM user";
     }
 
-    connector.getConnection(function (err, connection) {
-        connection.query(query, function (err, rows) {
-            connection.release();
+    connector.getConnection(function (err, con) {
+        con.query(query, function (err, rows) {
+            con.release();
             if (err) {
-                console.log(err);
+                // console.log(err);
             } else {
                 if (rows.length > 0) {
                     res.status(200).json({"users": rows});
@@ -39,7 +38,7 @@ router.get('/:email?', function (req, res) {
     })
 });
 
-//register a user
+//register a user (with the password hashed)
 router.post('/register', function (req, res) {
 
     var firstName = req.body.firstName || '';
@@ -52,8 +51,8 @@ router.post('/register', function (req, res) {
             password = hash;
 
             connector.getConnection(function (err, con) {
-                con.query('INSERT INTO user (firstname, lastname, password, email, created, updated) VALUES ' +
-                    '("' + firstName + '", "' + lastName + '", "' + password + '", "' + email + '",' +
+                con.query('INSERT INTO user (firstName, lastName, email, password, created, updated) VALUES ' +
+                    '("' + firstName + '", "' + lastName + '", "' + email + '", "' + password + '",' +
                     'ADDTIME(now(), \'02:00:00\'), ADDTIME(now(), \'02:00:00\'));', function (error) {
                     con.release();
                     if (error) {
@@ -89,8 +88,8 @@ router.post('/login', function (req, res) {
     var email = req.body.email || '';
     var password = req.body.password || '';
 
-    pool.getConnection(function (err, con) {
-        con.query("SELECT * FROM customer WHERE email = '" + email + "';", function (err, rows) {
+    connector.getConnection(function (err, con) {
+        con.query("SELECT * FROM user WHERE email = '" + email + "';", function (err, rows) {
             con.release();
             if (err) {
                 throw err;
