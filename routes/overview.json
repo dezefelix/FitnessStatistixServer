@@ -2,7 +2,7 @@
   "API routes info": [{
     "User" : [
       "api/user/<username> (GET)",
-      "api/user/login/<username> (GET) (unf)",
+      "api/user/login/<username> (POST) (unf)",
       "api/user/register<query params> (POST) (unf)"
     ]
   }, {

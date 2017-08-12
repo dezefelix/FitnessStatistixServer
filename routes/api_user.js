@@ -23,6 +23,9 @@ router.get('/:email?', function (req, res) {
     }
 
     connector.getConnection(function (err, con) {
+        if (err) {
+            res.status(404).json({"error": "error connecting to server"})
+        }
         con.query(query, function (err, rows) {
             con.release();
             if (err) {
@@ -89,11 +92,12 @@ router.post('/login', function (req, res) {
     var password = req.body.password || '';
 
     connector.getConnection(function (err, con) {
+        if (err) {
+            res.status(404).json({"error": "error connecting to server"});
+        }
         con.query("SELECT * FROM user WHERE email = '" + email + "';", function (err, rows) {
             con.release();
-            if (err) {
-                throw err;
-            }
+
             var hashPass = rows[0].password;
             bcrypt.compare(password, hashPass, function (err, response) {
                 if (response) {
@@ -105,7 +109,7 @@ router.post('/login', function (req, res) {
                         "email": rows[0].email
                     });
                 } else {
-                    res.status(401).json({"error": "Invalid credentials"});
+                    res.status(200).json({"log in": "failed"});
                 }
             });
         });
