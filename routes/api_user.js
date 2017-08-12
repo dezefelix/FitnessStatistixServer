@@ -97,8 +97,9 @@ router.post('/login', function (req, res) {
         }
         con.query("SELECT * FROM user WHERE email = '" + email + "';", function (err, rows) {
             con.release();
-
-            if (rows) {
+            if (rows.length < 1) {
+                res.status(417).json({"log in": "failed"});
+            } else {
                 var hashPass = rows[0].password;
                 bcrypt.compare(password, hashPass, function (err, response) {
                     if (response) {
@@ -109,10 +110,10 @@ router.post('/login', function (req, res) {
                             "lastName": rows[0].lastName,
                             "email": rows[0].email
                         });
+                    } else {
+                        res.status(418).json({"log in": "failed"})
                     }
                 });
-            } else {
-                res.status(200).json({"log in": "failed"});
             }
         });
     });
