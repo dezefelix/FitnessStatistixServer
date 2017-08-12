@@ -95,14 +95,14 @@ router.post('/login', function (req, res) {
         if (err) {
             res.status(404).json({"error": "error connecting to server"});
         }
-        con.query("SELECT * FROM user WHERE email = '" + email + "' AND password = '" + password + "';", function (err, rows) {
+        con.query("SELECT * FROM user WHERE email = '" + email + "';", function (err, rows) {
             con.release();
             if (rows.length < 1) {
                 res.status(404).json({"log in": "failed"});
             } else {
                 var hashPass = rows[0].password;
-                bcrypt.compare(password, hashPass, function (err, response) {
-                    if (response) {
+                bcrypt.compare(password, hashPass, function (err, result) {
+                    if (result) {
                         res.status(200).json({
                             "token": auth.encodeToken(email),
                             "userId": rows[0].userId,
@@ -110,6 +110,8 @@ router.post('/login', function (req, res) {
                             "lastName": rows[0].lastName,
                             "email": rows[0].email
                         });
+                    } else {
+                        res.status(404).json({"log in": "failed"});
                     }
                 });
             }
