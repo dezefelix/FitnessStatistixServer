@@ -100,9 +100,9 @@ router.post('/login', function (req, res) {
                     res.status(200).json({
                         "token": auth.encodeToken(email),
                         "userId": rows[0].userId,
-                        "firstName": rows[0].userId,
-                        "lastName": rows[0].userId,
-                        "email": rows[0].userId
+                        "firstName": rows[0].firstName,
+                        "lastName": rows[0].lastName,
+                        "email": rows[0].email
                     });
                 } else {
                     res.status(401).json({"error": "Invalid credentials"});
