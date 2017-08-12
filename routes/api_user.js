@@ -98,20 +98,22 @@ router.post('/login', function (req, res) {
         con.query("SELECT * FROM user WHERE email = '" + email + "';", function (err, rows) {
             con.release();
 
-            var hashPass = rows[0].password;
-            bcrypt.compare(password, hashPass, function (err, response) {
-                if (response) {
-                    res.status(200).json({
-                        "token": auth.encodeToken(email),
-                        "userId": rows[0].userId,
-                        "firstName": rows[0].firstName,
-                        "lastName": rows[0].lastName,
-                        "email": rows[0].email
-                    });
-                } else {
-                    res.status(200).json({"log in": "failed"});
-                }
-            });
+            if (rows) {
+                var hashPass = rows[0].password;
+                bcrypt.compare(password, hashPass, function (err, response) {
+                    if (response) {
+                        res.status(200).json({
+                            "token": auth.encodeToken(email),
+                            "userId": rows[0].userId,
+                            "firstName": rows[0].firstName,
+                            "lastName": rows[0].lastName,
+                            "email": rows[0].email
+                        });
+                    }
+                });
+            } else {
+                res.status(200).json({"log in": "failed"});
+            }
         });
     });
 });
