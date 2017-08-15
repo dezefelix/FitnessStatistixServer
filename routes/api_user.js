@@ -59,7 +59,7 @@ router.post('/register', function (req, res) {
                     'ADDTIME(now(), \'02:00:00\'), ADDTIME(now(), \'02:00:00\'));', function (error) {
                     con.release();
                     if (error) {
-                        res.status(400).json({"registration": "failed"});
+                        res.status(404).json({"registration": "failed"});
                     } else {
                         res.status(200).json({"registration": "success"});
                     }
