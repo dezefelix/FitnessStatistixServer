@@ -94,11 +94,13 @@ router.post('/login', function (req, res) {
     var email = req.body.email || '';
     var password = req.body.password || '';
 
+    var query = "SELECT * FROM user WHERE email = '" + email + "';";
+
     connector.getConnection(function (err, con) {
         if (err) {
             res.status(404).json({"error": "error connecting to server"});
         }
-        con.query("SELECT * FROM user WHERE email = '" + email + "';", function (err, rows) {
+        con.query(query, function (err, rows) {
             con.release();
             if (rows.length < 1) {
                 res.status(404).json({"log in": "failed"});
