@@ -49,14 +49,16 @@ router.post('/register', function (req, res) {
     var email = req.body.email || '';
     var password = req.body.password || '';
 
+    var query = "INSERT INTO user (firstName, lastName, email, password, created, updated) VALUES " +
+        "('" + firstName + "', '" + lastName + "', '" + email + "', '" + password + "', " +
+        "ADDTIME(now(), \'02:00:00\'), ADDTIME(now(), \'02:00:00\'));";
+
     bcrypt.genSalt(saltRounds, function (err, salt) {
         bcrypt.hash(password, salt, null, function (err, hash) {
             password = hash;
 
             connector.getConnection(function (err, con) {
-                con.query('INSERT INTO user (firstName, lastName, email, password, created, updated) VALUES ' +
-                    '("' + firstName + '", "' + lastName + '", "' + email + '", "' + password + '",' +
-                    'ADDTIME(now(), \'02:00:00\'), ADDTIME(now(), \'02:00:00\'));', function (error) {
+                con.query(query, function (error) {
                     con.release();
                     if (error) {
                         res.status(404).json({"registration": "failed"});
@@ -72,15 +74,16 @@ router.post('/register', function (req, res) {
 //every endpoint below, except for /login, needs JWT authorization
 router.all(new RegExp("[^(\/login)]"), function (req, res, next) {
 
-    console.log("VALIDATING TOKEN");
+    console.log("Validating token...");
 
     var token = (req.header('Auth')) || '';
 
     auth.decodeToken(token, function (err, payload) {
         if (err) {
             console.log('Error handler: ' + err.message);
-            res.status((err.status || 401 )).json({error: new Error("Not authorised").message});
+            res.status((err.status || 401 )).json({error: new Error("NOT AUTHORISED").message});
         } else {
+            console.log("AUTHORISED");
             next();
         }
     });

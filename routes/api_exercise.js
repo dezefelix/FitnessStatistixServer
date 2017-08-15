@@ -31,7 +31,7 @@ router.get('/:exercise?', function (req, res) {
                     if (rows.length > 0) {
                         res.status(200).json({"exercises": rows});
                     } else {
-                        res.status(200).send("Exercise '" + exercise + "' does not exists.");
+                        res.status(200).send("Exercise '" + exercise + "' does not exist.");
                     }
                 }
             })
