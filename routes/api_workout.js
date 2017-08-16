@@ -76,10 +76,14 @@ router.get('/user-bound-workouts/:userId', function (req, res) {
         }
         con.query(query, function (err, rows) {
             con.release();
-            if (rows.length < 1) {
-                res.status(404).json({"log in": "failed"});
+            if (err) {
+                res.status(404).json({"data retrieval": "no data"});
             } else {
-
+                if (rows.length < 1) {
+                    res.status(404).json({"data retrieval": "no data"});
+                } else {
+                    res.status(200).json({"sets": rows})
+                }
             }
         });
     });
