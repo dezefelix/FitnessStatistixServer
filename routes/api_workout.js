@@ -48,7 +48,7 @@ router.get('/:workoutId?', function (req, res) {
                     console.log(err);
                 } else {
                     if (rows.length > 0) {
-                        res.status(200).json({"workouts": rows});
+                        res.status(200).json({"sets": rows});
                     } else {
                         res.status(200).send("Workout #" + workoutId + " does not exist.");
                     }
