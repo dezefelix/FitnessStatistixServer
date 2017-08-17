@@ -68,7 +68,9 @@ router.get('/user-bound-workouts/:userId', function (req, res) {
         "ON workout.workoutId = `set`.workoutId " +
         "INNER JOIN exercise " +
         "ON `set`.exerciseId = exercise.exerciseId " +
-        "WHERE userId = " + userId + ";";
+        "WHERE userId = " + userId +
+        "ORDER BY workout.workoutId DESC " +
+        ";";
 
     connector.getConnection(function (err, con) {
         if (err) {
