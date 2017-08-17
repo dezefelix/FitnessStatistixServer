@@ -69,7 +69,7 @@ router.get('/user-bound-workouts/:userId', function (req, res) {
         "INNER JOIN exercise " +
         "ON `set`.exerciseId = exercise.exerciseId " +
         "WHERE userId = " + userId +
-        "ORDER BY workout.workoutId DESC " +
+        " ORDER BY workout.workoutId DESC " +
         ";";
 
     connector.getConnection(function (err, con) {
@@ -79,7 +79,8 @@ router.get('/user-bound-workouts/:userId', function (req, res) {
         con.query(query, function (err, rows) {
             con.release();
             if (err) {
-                res.status(404).json({"data retrieval": "no data"});
+                console.log(err);
+                res.status(404).json({"error": "failed"});
             } else {
                 if (rows.length < 1) {
                     res.status(404).json({"data retrieval": "no data"});
