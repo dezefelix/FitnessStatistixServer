@@ -24,7 +24,7 @@ router.get('/:email?', function (req, res) {
 
     connector.getConnection(function (err, con) {
         if (err) {
-            res.status(404).json({"error": "error connecting to server"})
+            res.status(500).json({"error": "error connecting to server"})
         }
         con.query(query, function (err, rows) {
             con.release();
@@ -101,7 +101,7 @@ router.post('/login', function (req, res) {
 
     connector.getConnection(function (err, con) {
         if (err) {
-            res.status(404).json({"error": "error connecting to server"});
+            res.status(500).json({"error": "error connecting to server"});
         }
         con.query(query, function (err, rows) {
             con.release();
