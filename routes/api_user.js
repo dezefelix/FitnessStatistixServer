@@ -58,6 +58,9 @@ router.post('/register', function (req, res) {
             password = hash;
 
             connector.getConnection(function (err, con) {
+                if (err) {
+                    res.status(500).json({"error": "error connecting to server"});
+                }
                 con.query(query, function (error) {
                     con.release();
                     if (error) {
