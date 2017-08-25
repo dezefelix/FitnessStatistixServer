@@ -16,7 +16,7 @@ router.get('/:exercise?', function (req, res) {
     if (exercise) {
         query = "SELECT * FROM exercise WHERE name = '" + exercise + "';";
     } else {
-        query = "SELECT * FROM exercise";
+        query = "SELECT * FROM exercise ORDER BY name ASC";
     }
 
     connector.getConnection(function (err, connection) {
