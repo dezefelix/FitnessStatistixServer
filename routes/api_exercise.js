@@ -21,7 +21,7 @@ router.get('/:exercise?', function (req, res) {
 
     connector.getConnection(function (err, connection) {
         if (err) {
-            console.log(err);
+            res.status(500).json({"error": "error connecting to server"});
         } else {
             connection.query(query, function (err, rows) {
                 connection.release();
